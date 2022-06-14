@@ -1,4 +1,5 @@
 const express = require('express');
+const { findById } = require('./../models/article');
 const Article = require('./../models/article')
 const router = express.Router();
 
@@ -27,10 +28,19 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.get('/edit/:id', async (req, res) => {
+    const article = await findById( req.params.id)
+    res.render('articles/new/edit', { article: article })
+});
+
+router.put('/:id', (req, res) => {
+
+})
+
 router.delete('/:id', async (req, res) => {
     await Article.findByIdAndDelete(req.params.id)
     res.redirect('/')
 
-
 });
+
 module.exports = router
